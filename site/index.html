@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BESS Engineering Health Check</title>
+    <meta name="description" content="A transparent, configurable engineering screening tool for utility-scale battery energy storage systems." />
+    <meta property="og:title" content="BESS Engineering Health Check" />
+    <meta property="og:description" content="Transparent engineering screening for utility-scale batteries." />
+    <meta property="og:image" content="og.png" />
+    <link rel="icon" href="favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">ENGINEERING DECISION SUPPORT · GENERIC LFP SCREENING PROFILE</p>
+        <h1>BESS Engineering Health Check</h1>
+      </div>
+      <div class="header-state"><i id="status-dot" class="status-dot"></i><div><span>ASSESSMENT</span><strong id="header-status">Insufficient data</strong></div></div>
+    </header>
+
+    <section class="safety-banner">
+      <strong>Screening tool — not a safety clearance.</strong>
+      <span>Use existing telemetry or qualified personnel. Never open, probe, energize, or bypass a BESS based on this site. OEM limits and active protection systems remain authoritative.</span>
+    </section>
+
+    <section class="workspace-meta">
+      <label>Asset / test ID<input id="asset-name" value="BESS asset 01" /></label>
+      <label>Assessment interval<input id="period" value="Latest representative cycle" /></label>
+      <div class="action-row">
+        <button data-action="healthy">Load healthy example</button>
+        <button data-action="degraded">Load degraded example</button>
+        <button data-action="import">Import</button>
+        <input id="file-input" class="file-input" type="file" accept=".json,.csv" />
+        <button data-action="json">Export JSON</button>
+        <button data-action="csv">Export CSV</button>
+        <button class="danger-button" data-action="clear">Clear</button>
+      </div>
+    </section>
+    <div id="notice" class="notice" hidden></div>
+
+    <section class="score-grid" aria-label="Assessment summary">
+      <article id="health-card" class="score-card primary status-panel-insufficient-data"><span>ENGINEERING HEALTH</span><div class="score-value"><b id="score">—</b><small id="score-suffix"></small></div><strong id="score-status">Insufficient data</strong></article>
+      <article class="score-card"><span>DATA COVERAGE</span><div class="score-value"><b id="coverage">0</b><small>%</small></div><strong id="confidence">Low confidence · 0 metrics</strong></article>
+      <article class="score-card"><span>CRITICAL FINDINGS</span><div class="score-value critical-text"><b id="critical-count">0</b></div><strong id="hard-gate">No safety override</strong></article>
+      <article class="score-card"><span>WATCH FINDINGS</span><div class="score-value watch-text"><b id="watch-count">0</b></div><strong id="issue-total">No entered value flagged</strong></article>
+    </section>
+
+    <section class="main-grid">
+      <aside class="category-panel"><div class="panel-heading"><span>CATEGORY SCORES</span><small>Measured only</small></div><div id="category-scores"><p class="empty-copy">Enter at least four readings or load an example to generate an assessment.</p></div></aside>
+
+      <section class="input-panel">
+        <div class="panel-heading"><span>ENGINEERING INPUTS</span><small id="metric-count">Loading…</small></div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search voltage, thermal, PCS…" aria-label="Search metrics" />
+          <select id="category" aria-label="Filter category"><option>All categories</option></select>
+          <label class="check"><input id="issues-only" type="checkbox" /> Issues only</label>
+          <label class="check"><input id="show-limits" type="checkbox" /> Edit limits</label>
+        </div>
+        <div id="metric-table" class="metric-table" role="table" aria-label="Battery engineering metrics"></div>
+      </section>
+
+      <aside class="findings-panel"><div class="panel-heading"><span>PRIORITISED FINDINGS</span><small id="finding-count">0 flagged</small></div><div id="findings"><p class="empty-copy">No entered metric is outside its configured limits. Coverage still determines confidence.</p></div></aside>
+    </section>
+
+    <section class="method-panel">
+      <div><p class="eyebrow">HOW THE RESULT IS CALCULATED</p><h2>Traceable scoring, with no hidden model</h2></div>
+      <ol>
+        <li><b>1</b><span><strong>Compare each reading</strong> Normal-band readings score 100. Values between warning and critical limits decline linearly toward zero.</span></li>
+        <li><b>2</b><span><strong>Weight engineering significance</strong> Capacity, safety, protection, and core performance signals carry more influence than contextual counters.</span></li>
+        <li><b>3</b><span><strong>Apply hard safety gates</strong> A critical safety-tagged result forces the overall result to Critical even if the weighted average is high.</span></li>
+        <li><b>4</b><span><strong>Report evidence coverage</strong> Missing readings do not count as healthy. Fewer than four readings returns Insufficient data.</span></li>
+      </ol>
+      <p class="method-note">Default limits are a generic LFP utility-scale screening profile, not design limits. Replace them with approved cell, rack, PCS, transformer, fire-system, site, warranty, commissioning, and grid-code limits before using the result in an engineering decision.</p>
+    </section>
+    <footer><span>BESS ENGINEERING HEALTH CHECK</span><span>Client-side only · values remain in this browser unless exported</span></footer>
+  </body>
+</html>
+

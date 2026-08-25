@@ -2,7 +2,7 @@
 
 A transparent browser-based engineering screening tool for utility-scale battery energy storage systems. Enter measured values, review category scores and prioritized findings, and replace the built-in generic LFP screening limits with approved project/OEM limits.
 
-**Live site:** https://bess-engineering-health-check.aydinol.chatgpt.site
+[**OPEN THE LIVE WEBSITE →**](https://bess-engineering-health-check.aydinol.chatgpt.site)\n\nThe GitHub page contains the source code. Use the link above to open the working assessment dashboard.
 
 ## Assessment logic
 

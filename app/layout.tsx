@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bess-engineering-health-check.aydinol.chatgpt.site"),
+  metadataBase: new URL("https://aydinol-create.github.io/bess-engineering-health-check"),
   title: "BESS Engineering Health Check",
   description: "A transparent, configurable engineering screening tool for utility-scale battery energy storage systems.",
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
